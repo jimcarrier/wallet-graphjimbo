@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Wallet Graph</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.24.0/cytoscape.min.js"></script>
+  <style>
+    body { font-family: sans-serif; }
+    #cy { width: 100%; height: 100vh; display: block; }
+  </style>
+</head>
+<body>
+  <div id="cy"></div>
+  <script>
+    fetch('graph.json')
+      .then(response => response.json())
+      .then(data => {
+        const cy = cytoscape({
+          container: document.getElementById('cy'),
+          elements: [
+            ...data.nodes.map(n => ({
+              data: {
+                id: n.id,
+                label: n.label,
+                color: n.color,
+                type: n.type
+              }
+            })),
+            ...data.edges.map(e => ({
+              data: {
+                id: e.source + '-' + e.target,
+                source: e.source,
+                target: e.target,
+                color: e.color,
+                amount: e.amount
+              }
+            }))
+          ],
+          style: [
+            {
+              selector: 'node',
+              style: {
+                'background-color': 'data(color)',
+                'label': 'data(label)',
+                'text-valign': 'center',
+                'color': '#fff',
+                'text-outline-width': 2,
+                'text-outline-color': '#000'
+              }
+            },
+            {
+              selector: 'edge',
+              style: {
+                'width': 3,
+                'line-color': 'data(color)',
+                'curve-style': 'bezier',
+                'target-arrow-shape': 'triangle',
+                'target-arrow-color': 'data(color)',
+                'label': 'data(amount)',
+                'font-size': 10,
+                'text-rotation': 'autorotate',
+                'color': '#999'
+              }
+            }
+          ],
+          layout: { name: 'cose', animate: true }
+        });
+
+        cy.on('tap', 'node', function(evt){
+          const node = evt.target;
+          alert(`Wallet: ${node.id()}\nNom: ${node.data('label')}`);
+        });
+      });
+  </script>
+</body>
+</html>

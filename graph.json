@@ -1,0 +1,41 @@
+{
+  "nodes": [
+    {
+      "id": "111111",
+      "label": "MotherWallet",
+      "type": "mother",
+      "sol": 0,
+      "color": "#000000"
+    },
+    {
+      "id": "222222",
+      "label": "Child_1",
+      "type": "child",
+      "sol": 0.5,
+      "color": "#268000"
+    },
+    {
+      "id": "333333",
+      "label": "Child_2",
+      "type": "child",
+      "sol": 3.7,
+      "color": "#b04000"
+    }
+  ],
+  "edges": [
+    {
+      "source": "111111",
+      "target": "222222",
+      "amount": 0.5,
+      "color": "#268000",
+      "time": "2025-04-23 15:23:45"
+    },
+    {
+      "source": "222222",
+      "target": "333333",
+      "amount": 3.7,
+      "color": "#b04000",
+      "time": "2025-04-23 15:25:12"
+    }
+  ]
+}
